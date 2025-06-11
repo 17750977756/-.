@@ -2,64 +2,66 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>朝暮与共，行至天光</title>
   <style>
-    body {
-      background: #111;
+    html, body {
+      height: 100%;
       margin: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      padding: 0;
+      overflow: hidden;
+      background: #000;
     }
-    .video-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    body {
       width: 100vw;
-      max-width: 100vw;
+      height: 100vh;
+      position: relative;
     }
     video {
-      max-width: 90vw;
-      max-height: 70vh;
-      border-radius: 16px;
-      box-shadow: 0 4px 32px rgba(0,0,0,0.4);
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: 1;
       background: #000;
+      pointer-events: none;
     }
     .caption {
       position: fixed;
       left: 50%;
-      bottom: 8vh;
+      bottom: 7vh;
       transform: translateX(-50%);
       color: #fff;
-      font-size: 2.2rem;
+      font-size: 3vw;
+      font-family: "STXingkai", "华文行楷", "KaiTi", "楷体", cursive, sans-serif;
       font-weight: bold;
-      letter-spacing: 0.1em;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.7);
-      background: rgba(0,0,0,0.3);
-      padding: 0.6em 2em;
-      border-radius: 2em;
+      letter-spacing: 0.15em;
+      z-index: 2;
+      text-shadow:
+        0 0 8px #000,
+        0 2px 12px #222,
+        2px 2px 0 #fff,
+        -2px -2px 0 #fff,
+        2px -2px 0 #fff,
+        -2px 2px 0 #fff;
+      /* 艺术字描边+阴影 */
+      user-select: none;
       pointer-events: none;
-      z-index: 10;
     }
     @media (max-width: 600px) {
       .caption {
-        font-size: 1.2rem;
-        padding: 0.4em 1em;
-      }
-      video {
-        max-width: 98vw;
-        max-height: 40vh;
+        font-size: 6vw;
       }
     }
   </style>
 </head>
 <body>
-  <div class="video-container">
-    <video src="https://sns-video-hw.xhscdn.com/01e37340b5183ab501037003847a34f7ad_258.mp4?sign=e0e7bafd11769da1d62739ec9a086f13&t=66180900" controls autoplay loop></video>
-  </div>
+  <video src="https://sns-video-hw.xhscdn.com/01e37340b5183ab501037003847a34f7ad_258.mp4?sign=e0e7bafd11769da1d62739ec9a086f13&t=66180900"
+         autoplay
+         loop
+         muted
+         playsinline>
+  </video>
   <div class="caption">朝暮与共，行至天光</div>
 </body>
 </html>
