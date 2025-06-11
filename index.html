@@ -1,114 +1,58 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <meta charset="utf-8">
-    <title>loveHeart</title>
-    <link rel="shortcut icon" href="http://zhouql.vip/images/心.png" type="image/x-icon">
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #main {
-            position: relative;
-            width: 90%;
-            height: 90%;
-        }
-
-        video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        canvas {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-        }
-
-        p {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: pink;
-            animation: k 1.5s ease-in-out infinite;
-            font-size: 20px;
-        }
-
-        @keyframes k {
-            100% {
-                font-size: 24px;
-                opacity: 0;
-            }
-        }
-
-        a.download-link {
-            position: fixed;
-            width: 30px;
-            height: 30px;
-            z-index: 1000;
-            background: #696969;
-            border-radius: 50%;
-            padding: 1px;
-            text-align: center;
-            color: #ddd;
-            text-decoration: none;
-            line-height: 30px;
-            font-size: 11px;
-        }
-
-        a.download-link.top1 {
-            top: 5%;
-            right: 10px;
-        }
-
-        a.download-link.top2 {
-            top: 20%;
-            right: 10px;
-        }
-    </style>
-</head>
-<body>
-    <p>💖</p>
-
-    <canvas id="pinkboard"></canvas>
-
-    <div id="main">
-        <video id="video1" muted autoplay loop playsinline>
-            <source src="https://sns-video-hw.xhscdn.com/01e37340b5183ab501037003847a34f7ad_258.mp4?sign=e0e7bafd11769da1d62739ec9a086f13&t=66180900" type="video/mp4">
-            您的浏览器不支持 video 标签。
-        </video>
-    </div>
-
-    <!-- 下载按钮 -->
-    <a href="https://pan.quark.cn/s/791627e40438" class="download-link top1">制</a>
-    <a href="https://pan.qu
-
-
-    @media (max-width: 600px) {
-      .caption {
-        font-size: 1.2rem;
-        padding: 0.4em 1em;
-      }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>环保宣传视频</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f7f7f7;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    #loading {
+      font-size: 18px;
+      color: #555;
+      margin-top: 20px;
+    }
+    video {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      margin: 20px auto;
+      display: block;
+      border-radius: 12px;
+      background: #000;
     }
   </style>
 </head>
 <body>
-  <video id="video1" muted autoplay loop playsinline src="57e50d0c07182d658785025cd9f3ea1c.mp4"></video>
-  <div class="caption">朝暮与共，行至天光</div>
+
+  <h1>环保宣传视频</h1>
+  <div id="loading">🎬 视频加载中，请稍候...</div>
+
+  <video
+    id="video1"
+    muted
+    autoplay
+    loop
+    playsinline
+    controls
+  >
+    <source src="57e50d0c07182d658785025cd9f3ea1c.mp4" type="video/mp4" />
+    您的浏览器不支持 video 标签，请尝试使用现代浏览器访问。
+  </video>
+
+  <script>
+    const video = document.getElementById('video1');
+    const loading = document.getElementById('loading');
+
+    video.oncanplay = () => {
+      loading.style.display = 'none';
+    };
+  </script>
+
 </body>
 </html>
-
-
-
