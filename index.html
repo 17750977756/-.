@@ -3,18 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>环保宣传视频</title>
+  <title>朝暮与共</title>
   <style>
     body {
       margin: 0;
       padding: 0;
-      background-color: #f7f7f7;
+      background-color: #000;
       font-family: Arial, sans-serif;
       text-align: center;
+      color: white;
     }
     #loading {
       font-size: 18px;
-      color: #555;
+      color: #ccc;
       margin-top: 20px;
     }
     video {
@@ -26,11 +27,15 @@
       border-radius: 12px;
       background: #000;
     }
+    #subtitle {
+      font-size: 22px;
+      margin-top: 10px;
+      color: #eee;
+    }
   </style>
 </head>
 <body>
 
-  <h1>环保宣传视频</h1>
   <div id="loading">🎬 视频加载中，请稍候...</div>
 
   <video
@@ -44,6 +49,8 @@
     <source src="57e50d0c07182d658785025cd9f3ea1c.mp4" type="video/mp4" />
     您的浏览器不支持 video 标签，请尝试使用现代浏览器访问。
   </video>
+
+  <div id="subtitle">朝暮与共，行至天光</div>
 
   <script>
     const video = document.getElementById('video1');
