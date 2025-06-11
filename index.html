@@ -53,12 +53,47 @@
   </style>
 </head>
 <body>
-  <video src="https://sns-video-hw.xhscdn.com/01e37340b5183ab501037003847a34f7ad_258.mp4?sign=e0e7bafd11769da1d62739ec9a086f13&t=66180900"
+  <video id="backgroundVideo" src="https://sns-video-hw.xhscdn.com/01e37340b5183ab501037003847a34f7ad_258.mp4?sign=e0e7bafd11769da1d62739ec9a086f13&t=66180900"
          autoplay
          loop
          muted
          playsinline>
   </video>
   <div class="caption">朝暮与共，行至天光</div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const video = document.getElementById('backgroundVideo');
+      if (video) {
+        // 尝试在DOM加载完成后播放视频
+        // 这可能仍然会被部分浏览器的策略（强制用户交互）阻止
+        video.play().catch(error => {
+          console.log('视频自动播放被阻止：', error);
+        });
+
+        // 监听 canplaythrough 事件，确保视频已加载足够可以完整播放，然后再次尝试播放
+        video.addEventListener('canplaythrough', () => {
+          video.play().catch(error => {
+            console.log('视频在 canplaythrough 状态下播放被阻止：', error);
+          });
+        });
+      }
+    });
+
+    // 备用方案（如果上述方法仍不奏效，可能需要用户点击屏幕触发播放）
+    // 为了最大程度符合你“直接显示”的要求，这里没有直接添加一个“点击播放”按钮
+    // 如果视频依然不显示，你可能需要考虑在页面上添加一个透明的点击区域，
+    // 引导用户轻触屏幕，然后在点击事件中调用 video.play()
+    /*
+    document.body.addEventListener('click', function() {
+      const video = document.getElementById('backgroundVideo');
+      if (video && video.paused) {
+        video.play().catch(error => {
+          console.log('用户点击后视频播放被阻止：', error);
+        });
+      }
+    });
+    */
+  </script>
 </body>
 </html>
