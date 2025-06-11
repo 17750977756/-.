@@ -21,36 +21,33 @@
       top: 0; left: 0;
       width: 100vw;
       height: 100vh;
-      object-fit: cover;
+      object-fit: cover; /* 确保视频铺满整个容器，可能会裁剪边缘 */
       z-index: 1;
       background: #000;
-      pointer-events: none;
+      pointer-events: none; /* 禁止视频上的鼠标事件，让点击穿透到下面的元素 */
     }
     .caption {
       position: fixed;
       left: 50%;
-      bottom: 7vh;
+      bottom: 7vh; /* 调整位置 */
       transform: translateX(-50%);
-      color: #fff;
+      color: #FF69B4; /* 粉色 */
       font-size: 3vw;
-      font-family: "STXingkai", "华文行楷", "KaiTi", "楷体", cursive, sans-serif;
+      font-family: "STXingkai", "华文行楷", "KaiTi", "楷体", cursive, sans-serif; /* 使用艺术字体 */
       font-weight: bold;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.15em; /* 字间距 */
       z-index: 2;
       text-shadow:
-        0 0 8px #000,
-        0 2px 12px #222,
-        2px 2px 0 #fff,
-        -2px -2px 0 #fff,
-        2px -2px 0 #fff,
-        -2px 2px 0 #fff;
-      /* 艺术字描边+阴影 */
+        0 0 10px rgba(255, 105, 180, 0.8), /* 粉色发光效果 */
+        0 0 20px rgba(255, 105, 180, 0.6),
+        0 0 30px rgba(0, 0, 0, 0.4); /* 黑色阴影 */
       user-select: none;
       pointer-events: none;
     }
     @media (max-width: 600px) {
       .caption {
-        font-size: 6vw;
+        font-size: 6vw; /* 手机端字体适配 */
+        bottom: 5vh; /* 手机端位置适配 */
       }
     }
   </style>
