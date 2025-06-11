@@ -265,8 +265,10 @@
                 height = bloom.height || this.height,
                 figure = this.seed.heart.figure;
             var r = 240, x, y;
+            var colors = ['#DCEEF8', '#B9E3FB', '#A6C3F5', '#77C3E3'];
             for (var i = 0; i < num; i++) {
-                cache.push(this.createBloom(width, height, r, figure));
+                var color = colors[Math.floor(Math.random() * colors.length)];
+                cache.push(this.createBloom(width, height, r, figure, color));
             }
             this.blooms = [];
             this.bloomsCache = cache;
@@ -420,8 +422,10 @@
                     height = bloom.height || this.height,
                     figure = this.seed.heart.figure;
                 var r = 240, x, y;
+                var colors = ['#DCEEF8', '#B9E3FB', '#A6C3F5', '#77C3E3'];
                 for (var i = 0; i < random(1,2); i++) {
-                    blooms.push(this.createBloom(width / 2 + width, height, r, figure, null, 1, null, 1, new Point(random(-100,600), 720), random(200,300)));
+                    var color = colors[Math.floor(Math.random() * colors.length)];
+                    blooms.push(this.createBloom(width / 2 + width, height, r, figure, color, 1, null, 1, new Point(random(-100,600), 720), random(200,300)));
                 }
             }
         }
