@@ -193,19 +193,7 @@ id="canvas"></CANVAS>             </DIV></DIV>
             $await(moveAnimate());
 
             textAnimate().start();
-	    // 添加图片
-           var img = $('<img>', {
-	   	src: '5ed138d2cd94e09a529027e658898d9.png',
-		style: `
-		        position: absolute;
-		        left: 50%;
-		        transform: translateX(-50%);
-		        bottom: 20px;
-		        width: 120px;      /* 控制图片宽度 */
-		        height: auto;
-		        z-index: 10;`
-	    });
-	    $('#warp').append(img);
+
             $await(jumpAnimate());
         }));
 
