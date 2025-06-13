@@ -44,7 +44,8 @@ class="space"></SPAN> --春晗--</SPAN>			   </FONT>
 <DIV id="clock-box">我们已经在一起...</SPAN>           
    
 <DIV id="clock"></DIV></DIV><CANVAS width="1100" height="680" 
-id="canvas"></CANVAS>             </DIV></DIV>
+id="canvas"></CANVAS>            
+<img id="love-photo" src="5ed138d2cd94e09a529027e658898d9.png" style="display:none; position:absolute; left:50%; transform:translateX(-50%); top:420px; max-width:320px; width:80vw; z-index:10;">    </DIV></DIV>
 <SCRIPT>
 
     (function(){
@@ -195,6 +196,8 @@ id="canvas"></CANVAS>             </DIV></DIV>
             textAnimate().start();
 
             $await(jumpAnimate());
+	    // 动画全部完成后显示图片
+            $("#love-photo").fadeIn(800);
         }));
 
         runAsync().start();
