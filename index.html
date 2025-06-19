@@ -238,24 +238,91 @@ musicPlayer.volume = 0.5;
 
 // 页面加载完成后立即播放音乐
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('页面加载完成，开始音乐诊断...');
+    console.log('音乐文件路径:', musicPlayer.currentSrc);
+    console.log('音乐就绪状态:', musicPlayer.readyState);
+    console.log('音乐网络状态:', musicPlayer.networkState);
+    
     // 立即尝试播放
-    musicPlayer.play().catch(function(error) {
+    musicPlayer.play().then(function() {
+        console.log('✅ 音乐自动播放成功！');
+    }).catch(function(error) {
+        console.log('❌ 自动播放失败:', error.name, error.message);
+        console.log('需要用户交互才能播放音乐');
+        
         // 如果自动播放失败，用户第一次交互时播放
         document.addEventListener('click', function firstClick() {
-            musicPlayer.play();
+            console.log('用户点击，开始播放音乐');
+            musicPlayer.play().then(function() {
+                console.log('✅ 音乐播放成功！');
+            }).catch(function(e) {
+                console.log('❌ 播放失败:', e.message);
+            });
             document.removeEventListener('click', firstClick);
         }, { once: true });
         
         document.addEventListener('touchstart', function firstTouch() {
-            musicPlayer.play();
+            console.log('用户触摸，开始播放音乐');
+            musicPlayer.play().then(function() {
+                console.log('✅ 音乐播放成功！');
+            }).catch(function(e) {
+                console.log('❌ 播放失败:', e.message);
+            });
             document.removeEventListener('touchstart', firstTouch);
         }, { once: true });
         
         document.addEventListener('keydown', function firstKey() {
-            musicPlayer.play();
+            console.log('用户按键，开始播放音乐');
+            musicPlayer.play().then(function() {
+                console.log('✅ 音乐播放成功！');
+            }).catch(function(e) {
+                console.log('❌ 播放失败:', e.message);
+            });
             document.removeEventListener('keydown', firstKey);
         }, { once: true });
     });
+});
+
+// 监听音乐事件
+musicPlayer.addEventListener('loadstart', function() {
+    console.log('🔄 开始加载音乐文件');
+});
+
+musicPlayer.addEventListener('canplay', function() {
+    console.log('✅ 音乐可以播放');
+});
+
+musicPlayer.addEventListener('canplaythrough', function() {
+    console.log('✅ 音乐完全加载完成');
+});
+
+musicPlayer.addEventListener('play', function() {
+    console.log('🎵 音乐开始播放');
+});
+
+musicPlayer.addEventListener('error', function(e) {
+    console.log('❌ 音乐加载失败');
+    console.log('错误代码:', musicPlayer.error ? musicPlayer.error.code : '未知');
+    console.log('错误消息:', musicPlayer.error ? musicPlayer.error.message : '未知');
+    
+    if (musicPlayer.error) {
+        switch(musicPlayer.error.code) {
+            case 1:
+                console.log('错误原因: 媒体加载被中止');
+                break;
+            case 2:
+                console.log('错误原因: 网络错误');
+                break;
+            case 3:
+                console.log('错误原因: 媒体解码错误 - MGG格式可能不被支持');
+                break;
+            case 4:
+                console.log('错误原因: 媒体源不支持');
+                break;
+            default:
+                console.log('错误原因: 未知错误');
+        }
+    }
 });
 </script>
 
