@@ -226,37 +226,43 @@ class="space"></SPAN> -- 春晗--</SPAN>			   </FONT>
 </div>
 
 <!-- 背景音乐 -->
-<audio id="bgmMusic" preload="auto" autoplay loop>
+<audio id="bgmMusic" preload="auto" loop>
     <source src="music/林俊杰 - 第几个100天.mflac" type="audio/flac">
+    <source src="music/林俊杰 - 第几个100天.mp3" type="audio/mp3">
     <source src="music/background-music.mp3" type="audio/mp3">
     <source src="music/bgm.mp3" type="audio/mp3">
     <source src="music/music.mp3" type="audio/mp3">
-    <!-- 备用在线音乐源，以防本地文件不存在 -->
-    <source src="http://qzone.haoduoge.com/music/C2C3F0LSXH4D771253124A26CF9C71C939B2A.mp3" type="audio/mp3">
 </audio>
 
 <script>
-// 背景音乐自动播放
 var musicPlayer = document.getElementById('bgmMusic');
+var musicStarted = false;
 
-// 设置音乐音量
 musicPlayer.volume = 0.3;
 
-// 页面加载完成后尝试播放音乐
-document.addEventListener('DOMContentLoaded', function() {
-    // 尝试自动播放
+function startMusic() {
+    if (musicStarted) return;
     musicPlayer.play().catch(function(error) {
         // 静默处理错误
     });
-    
-    // 用户第一次点击页面时尝试播放音乐
-    document.addEventListener('click', function firstClick() {
-        musicPlayer.play().catch(function(error) {
-            // 静默处理错误
-        });
-        document.removeEventListener('click', firstClick);
-    }, { once: true });
+    musicStarted = true;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+        startMusic();
+    }, 1000);
 });
+
+document.addEventListener('click', function firstClick() {
+    startMusic();
+    document.removeEventListener('click', firstClick);
+}, { once: true });
+
+document.addEventListener('touchstart', function firstTouch() {
+    startMusic();
+    document.removeEventListener('touchstart', firstTouch);
+}, { once: true });
 </script>
 
 </body>
