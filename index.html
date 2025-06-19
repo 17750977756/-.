@@ -227,8 +227,8 @@ class="space"></SPAN> -- 春晗--</SPAN>			   </FONT>
 
 <!-- 背景音乐 -->
 <audio id="bgmMusic" preload="auto" loop>
+    <source src="music/林俊杰 - 第几个100天.mgg" type="audio/mgg">
     <source src="music/林俊杰 - 第几个100天.mflac" type="audio/flac">
-    <source src="music/林俊杰 - 第几个100天.mp3" type="audio/mp3">
     <source src="music/background-music.mp3" type="audio/mp3">
     <source src="music/bgm.mp3" type="audio/mp3">
     <source src="music/music.mp3" type="audio/mp3">
@@ -245,9 +245,12 @@ musicPlayer.volume = 0.5;
 function startMusic() {
     if (musicStarted) return;
     
-    console.log('尝试播放音乐...');
+    console.log('=== 音乐播放诊断 ===');
     console.log('当前音乐源:', musicPlayer.currentSrc);
     console.log('音乐就绪状态:', musicPlayer.readyState);
+    console.log('音乐网络状态:', musicPlayer.networkState);
+    console.log('音乐时长:', musicPlayer.duration);
+    console.log('音乐文件大小:', '10.7MB (MGG格式)');
     
     // 强制加载音乐
     musicPlayer.load();
@@ -258,10 +261,16 @@ function startMusic() {
     if (playPromise !== undefined) {
         playPromise.then(function() {
             musicStarted = true;
-            console.log('音乐播放成功！');
+            console.log('✅ 音乐播放成功！');
         }).catch(function(error) {
-            console.log('音乐播放失败:', error);
-            console.log('错误详情:', error.message);
+            console.log('❌ 音乐播放失败:', error);
+            console.log('错误名称:', error.name);
+            console.log('错误消息:', error.message);
+            
+            // 检查是否是格式问题
+            if (musicPlayer.currentSrc.includes('.flac')) {
+                console.log('⚠️ 可能是FLAC格式不被支持，建议转换为MP3格式');
+            }
         });
     }
 }
@@ -297,33 +306,54 @@ document.addEventListener('keydown', function firstKey() {
 
 // 监听音乐事件
 musicPlayer.addEventListener('loadstart', function() {
-    console.log('开始加载音乐:', musicPlayer.currentSrc);
+    console.log('🔄 开始加载音乐:', musicPlayer.currentSrc);
 });
 
 musicPlayer.addEventListener('canplay', function() {
-    console.log('音乐可以播放:', musicPlayer.currentSrc);
+    console.log('✅ 音乐可以播放:', musicPlayer.currentSrc);
 });
 
 musicPlayer.addEventListener('canplaythrough', function() {
-    console.log('音乐完全加载完成:', musicPlayer.currentSrc);
+    console.log('✅ 音乐完全加载完成:', musicPlayer.currentSrc);
 });
 
 musicPlayer.addEventListener('play', function() {
-    console.log('音乐开始播放');
+    console.log('🎵 音乐开始播放');
 });
 
 musicPlayer.addEventListener('pause', function() {
-    console.log('音乐暂停');
+    console.log('⏸️ 音乐暂停');
 });
 
 musicPlayer.addEventListener('ended', function() {
-    console.log('音乐播放结束，重新开始');
+    console.log('🔄 音乐播放结束，重新开始');
 });
 
 musicPlayer.addEventListener('error', function(e) {
-    console.log('音乐加载失败:', e);
+    console.log('❌ 音乐加载失败:', e);
     console.log('失败的音乐源:', musicPlayer.currentSrc);
     console.log('错误代码:', musicPlayer.error ? musicPlayer.error.code : '未知');
+    console.log('错误消息:', musicPlayer.error ? musicPlayer.error.message : '未知');
+    
+    // 详细的错误诊断
+    if (musicPlayer.error) {
+        switch(musicPlayer.error.code) {
+            case 1:
+                console.log('错误原因: 媒体加载被中止');
+                break;
+            case 2:
+                console.log('错误原因: 网络错误');
+                break;
+            case 3:
+                console.log('错误原因: 媒体解码错误 - 可能是格式不支持');
+                break;
+            case 4:
+                console.log('错误原因: 媒体源不支持');
+                break;
+            default:
+                console.log('错误原因: 未知错误');
+        }
+    }
 });
 </script>
 
