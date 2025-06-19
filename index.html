@@ -227,15 +227,14 @@ class="space"></SPAN> -- 春晗--</SPAN>			   </FONT>
 
 <!-- 背景音乐 -->
 <audio id="bgmMusic" preload="auto" autoplay loop>
-    <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/wav">
-    <source src="music/music2.mgg" type="audio/mgg">
+    <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mp3">
 </audio>
 
 <script>
 var musicPlayer = document.getElementById('bgmMusic');
 
 // 设置音乐音量
-musicPlayer.volume = 0.5;
+musicPlayer.volume = 0.3;
 
 // 页面加载完成后立即播放音乐
 document.addEventListener('DOMContentLoaded', function() {
@@ -305,25 +304,6 @@ musicPlayer.addEventListener('error', function(e) {
     console.log('❌ 音乐加载失败');
     console.log('错误代码:', musicPlayer.error ? musicPlayer.error.code : '未知');
     console.log('错误消息:', musicPlayer.error ? musicPlayer.error.message : '未知');
-    
-    if (musicPlayer.error) {
-        switch(musicPlayer.error.code) {
-            case 1:
-                console.log('错误原因: 媒体加载被中止');
-                break;
-            case 2:
-                console.log('错误原因: 网络错误');
-                break;
-            case 3:
-                console.log('错误原因: 媒体解码错误 - MGG格式可能不被支持');
-                break;
-            case 4:
-                console.log('错误原因: 媒体源不支持');
-                break;
-            default:
-                console.log('错误原因: 未知错误');
-        }
-    }
 });
 </script>
 
