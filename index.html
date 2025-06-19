@@ -237,13 +237,14 @@ class="space"></SPAN> -- 春晗--</SPAN>			   </FONT>
 <script>
 var musicPlayer = document.getElementById('bgmMusic');
 var musicStarted = false;
+var musicLoading = false;
 
 // 设置音乐音量
 musicPlayer.volume = 0.5;
 
 // 音乐播放函数
 function startMusic() {
-    if (musicStarted) return;
+    if (musicStarted || musicLoading) return;
     
     console.log('=== 音乐播放诊断 ===');
     console.log('当前音乐源:', musicPlayer.currentSrc);
@@ -252,27 +253,59 @@ function startMusic() {
     console.log('音乐时长:', musicPlayer.duration);
     console.log('音乐文件大小:', '10.7MB (MGG格式)');
     
-    // 强制加载音乐
-    musicPlayer.load();
-    
-    // 尝试播放
-    var playPromise = musicPlayer.play();
-    
-    if (playPromise !== undefined) {
-        playPromise.then(function() {
-            musicStarted = true;
-            console.log('✅ 音乐播放成功！');
-        }).catch(function(error) {
-            console.log('❌ 音乐播放失败:', error);
-            console.log('错误名称:', error.name);
-            console.log('错误消息:', error.message);
-            
-            // 检查是否是格式问题
-            if (musicPlayer.currentSrc.includes('.flac')) {
-                console.log('⚠️ 可能是FLAC格式不被支持，建议转换为MP3格式');
-            }
-        });
+    // 检查音乐是否已经可以播放
+    if (musicPlayer.readyState >= 2) {
+        console.log('音乐已准备就绪，直接播放');
+        playMusic();
+    } else {
+        console.log('音乐未准备就绪，等待加载完成');
+        musicLoading = true;
+        // 等待音乐加载完成后再播放
+        musicPlayer.addEventListener('canplaythrough', function onCanPlay() {
+            musicPlayer.removeEventListener('canplaythrough', onCanPlay);
+            musicLoading = false;
+            playMusic();
+        }, { once: true });
+        
+        // 强制加载音乐
+        musicPlayer.load();
     }
+}
+
+// 实际播放音乐的函数
+function playMusic() {
+    if (musicStarted) return;
+    
+    console.log('开始播放音乐...');
+    
+    // 确保音乐暂停后再播放，避免冲突
+    musicPlayer.pause();
+    
+    // 延迟一点时间再播放，确保暂停操作完成
+    setTimeout(function() {
+        var playPromise = musicPlayer.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.then(function() {
+                musicStarted = true;
+                console.log('✅ 音乐播放成功！');
+            }).catch(function(error) {
+                console.log('❌ 音乐播放失败:', error);
+                console.log('错误名称:', error.name);
+                console.log('错误消息:', error.message);
+                
+                // 如果是被中断的错误，等待一下再重试
+                if (error.name === 'AbortError') {
+                    console.log('播放被中断，等待后重试...');
+                    setTimeout(function() {
+                        if (!musicStarted) {
+                            playMusic();
+                        }
+                    }, 1000);
+                }
+            });
+        }
+    }, 100);
 }
 
 // 页面加载完成后尝试播放音乐
